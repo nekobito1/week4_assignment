@@ -3,26 +3,20 @@
 
 # get the number of files in the current directory (including hidden files.)
 function getnumfiles {
-  nfiles=$(ls -a | wc -l)
+  nfiles=$(ls -A | wc -l)
   echo $nfiles
 }
 
 num_files=$(getnumfiles)
 
 # Keep prompting user to guess how many files are in the current directory until user gets it right
+# while checking for a valid input (integer)
 echo -n "Please guess how many files are in the current directory: "
 read user_guess
-while ! [[ $user_guess =~ ^[0-9]+$ ]]
-do
-  echo "Your guess must be an integer."
-  echo -n "Guess again: "
-  read user_guess
-done
 
-while [[ $user_guess -ne $num_files ]]
+while ! [[ $user_guess =~ ^[0-9]+$ ]] || [[ $user_guess -ne $num_files ]]
 do
 
-  # check to make sure user input is an integer
   if ! [[ $user_guess =~ ^[0-9]+$ ]]
   then
     echo "Your guess must be an integer."
